@@ -16,6 +16,7 @@ This project is a portfolio web application showcasing AI projects. It uses Fast
 - Node.js 12+
 - npm
 
+
 ## Backend Setup
 
 1. Navigate to the backend directory:
