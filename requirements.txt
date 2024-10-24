@@ -1,7 +1,7 @@
 fastapi==0.115.2
 uvicorn==0.29.0
 pydantic==2.9.2
-sqlalchemy
-jose[cryptography]
-passlib[bcrypt]
-python-dotenv
+sqlalchemy==2.0.23
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0

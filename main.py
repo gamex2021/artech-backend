@@ -120,7 +120,7 @@ def get_password_hash(password):
 
 
 def authenticate_user(db, username: str, password: str):
-    print(password, username)
+    
     user = db.query(DBUser).filter(DBUser.username == username).first()
     if not user or not verify_password(password, user.hashed_password):
         return False
@@ -178,7 +178,7 @@ async def signup(user: UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/auth/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(),  db: Session = Depends(get_db)):
-    print(form_data)
+    
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
