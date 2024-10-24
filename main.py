@@ -7,10 +7,15 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
+import os
+import uvicorn
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.exc import IntegrityError
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
 
 # Database setup
 SQLALCHEMY_DATABASE_URL = "sqlite:///./portfolio.db"
@@ -120,7 +125,7 @@ def get_password_hash(password):
 
 
 def authenticate_user(db, username: str, password: str):
-    
+
     user = db.query(DBUser).filter(DBUser.username == username).first()
     if not user or not verify_password(password, user.hashed_password):
         return False
@@ -178,7 +183,7 @@ async def signup(user: UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/auth/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(),  db: Session = Depends(get_db)):
-    
+
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -196,7 +201,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(),  db: Session =
 
 
 class ProjectResponse(BaseModel):
-    projects: List[Project] 
+    projects: List[Project]
     total_count: int
 
 
